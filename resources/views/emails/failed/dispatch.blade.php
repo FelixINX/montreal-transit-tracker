@@ -20,7 +20,7 @@ Snooze notifications for this error:
         background-color: #2d3648;
         color: white;
         border-radius: 5px;
-        margin-bottom: 15px;3309
+        margin-bottom: 15px;
     }
 </style>
 

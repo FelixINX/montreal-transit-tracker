@@ -22,13 +22,6 @@ Route::get('/', function () {
 })->name('tt.app');
 
 /*
- * Opt-out from statistics
- */
-Route::get('/opt-out/{lang?}', function ($lang = 'en') {
-    return view('opt-out', compact('lang'));
-})->name('tt.opt-out');
-
-/*
  * Signed route to snooze failed job notification
  */
 Route::get('/failed-job/{failedJob}/snooze/{hours}', [SnoozeFailedJobController::class, 'snooze'])->middleware('signed')->name('signed.snooze');
