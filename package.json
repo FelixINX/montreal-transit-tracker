@@ -3,7 +3,17 @@
     "author": "Félix Desjardins",
     "version": "2.3.5",
     "private": true,
-    "scripts": {},
-    "devDependencies": {},
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "serve": "vite preview"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.2.5",
+        "postcss": "^8.2.9",
+        "tailwindcss": "^2.0.4",
+        "vite": "^2.0.1",
+        "laravel-vite": "^0.0.7"
+    },
     "dependencies": {}
 }
