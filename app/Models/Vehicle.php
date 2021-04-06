@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Http\Resources\V2\VehicleResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use Spatie\ResponseCache\Facades\ResponseCache;
 
 class Vehicle extends Model
 {
+    use Searchable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -59,15 +63,25 @@ class Vehicle extends Model
         return $query->where('active', 1);
     }
 
+    public function toSearchableArray()
+    {
+        return VehicleResource::make($this)->resolve();
+    }
+
+    protected function makeAllSearchableUsing(Builder $query)
+    {
+        return $query->with(['trip', 'trip.service', 'agency', 'links:id']);
+    }
+
     protected static function booted()
     {
-        static::created(function (Vehicle $vehicle) {
+        static::created(function (self $vehicle) {
             $vehicle->icon = $vehicle->agency->vehicles_type;
             $vehicle->links()->attach($vehicle->agency->links->pluck('id'));
             $vehicle->save();
         });
 
-        static::updated(function (Vehicle $vehicle) {
+        static::updated(function (self $vehicle) {
             ResponseCache::forget("/v2/vehicles/{$vehicle->id}");
         });
     }
